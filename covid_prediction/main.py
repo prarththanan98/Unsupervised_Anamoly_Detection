@@ -25,12 +25,16 @@ print(classification_report(y_test,predict))
 print(confusion_matrix(y_test,predict))'''
 #%%
 X=df1.drop('corona_result',axis=1)
+df1.info()
+df1['head_ache'].value_counts()
 from sklearn.svm import OneClassSVM
-svm = OneClassSVM(kernel='rbf', gamma=0.001, nu=0.5)
+svm = OneClassSVM(kernel='rbf', gamma=0.001, nu=14729/(14729+260227+3892))
 svm.fit(X)
 predict=svm.predict(X)
 df1['model_prediction']=predict
 
 df1.info()
 df1.model_prediction.value_counts()
-df1.corona_result.value_counts()
+df1['model_prediction'].value_counts()
+
+df1.to_csv('data/svm_output.csv', index=False)
